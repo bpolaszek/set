@@ -1,3 +1,6 @@
+[![CI Workflow](https://github.com/bpolaszek/set/actions/workflows/ci.yml/badge.svg)](https://github.com/bpolaszek/set/actions/workflows/ci.yml)
+[![Coverage](https://codecov.io/gh/bpolaszek/set/branch/main/graph/badge.svg?token=L5ulTaymbt)](https://codecov.io/gh/bpolaszek/set)
+
 # bentools/set
 
 Javascript has a convenient way of deduplicating arrays:
