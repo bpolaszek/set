@@ -1,0 +1,9 @@
+parameters:
+    level: 8
+    paths:
+        - src
+        - tests
+    ignoreErrors:
+        -
+            message: '#Call to an undefined method Pest\\Expectation\|Pest\\Support\\Extendable#'
+            path: tests/*
