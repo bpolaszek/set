@@ -16,16 +16,30 @@ use function in_array;
 final class Set implements IteratorAggregate
 {
     /**
-     * @var iterable<T>
+     * @var array<iterable<T>>
      */
-    private iterable $items;
+    private array $iterables;
 
     /**
      * @param iterable<T> $items
+     * @param iterable<T> ...$otherIterables
      */
-    public function __construct(iterable $items)
+    public function __construct(iterable $items, iterable ...$otherIterables)
     {
-        $this->items = $items;
+        $this->iterables = [$items, ...$otherIterables];
+    }
+
+    /**
+     * @param iterable<T> $items
+     * @param iterable<T> ...$otherIterables
+     * @return self<T>
+     */
+    public function with(iterable $items, iterable ...$otherIterables): self
+    {
+        $clone = clone $this;
+        $clone->iterables = [...$clone->iterables, $items, ...$otherIterables];
+
+        return $clone;
     }
 
     /**
@@ -34,11 +48,21 @@ final class Set implements IteratorAggregate
     public function getIterator(): Traversable
     {
         $yielded = [];
-        foreach ($this->items as $key => $item) {
-            if (!in_array($item, $yielded, true)) {
-                yield $key => $item;
-                $yielded[] = $item;
+        foreach ($this->iterables as $iterable) {
+            foreach ($iterable as $key => $item) {
+                if (!in_array($item, $yielded, true)) {
+                    yield $key => $item;
+                    $yielded[] = $item;
+                }
             }
         }
+    }
+
+    /**
+     * @return array<T>
+     */
+    public function toArray(): array
+    {
+        return [...$this];
     }
 }
