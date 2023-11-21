@@ -33,3 +33,9 @@ it('accepts multiple arguments', function () {
         'pineapple',
     ]);
 });
+
+it('accepts a different accessor', function () {
+    $set = (new Set(['banana', 'apple', 'BANANA']))->withAccessor('strtoupper');
+
+    expect([...$set])->toBe(['banana', 'apple']);
+});
