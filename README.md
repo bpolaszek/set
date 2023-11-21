@@ -1,5 +1,8 @@
+[![Latest Stable Version](https://poser.pugx.org/bentools/set/v/stable)](https://packagist.org/packages/bentools/set)
+[![License](https://poser.pugx.org/bentools/set/license)](https://packagist.org/packages/bentools/set)
 [![CI Workflow](https://github.com/bpolaszek/set/actions/workflows/ci.yml/badge.svg)](https://github.com/bpolaszek/set/actions/workflows/ci.yml)
 [![Coverage](https://codecov.io/gh/bpolaszek/set/branch/main/graph/badge.svg?token=L5ulTaymbt)](https://codecov.io/gh/bpolaszek/set)
+[![Total Downloads](https://poser.pugx.org/bentools/set/downloads)](https://packagist.org/packages/bentools/set)
 
 # bentools/set
 
