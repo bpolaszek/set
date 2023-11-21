@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Bentools\Set;
 
+use Closure;
 use IteratorAggregate;
 use Traversable;
 
@@ -20,6 +21,8 @@ final class Set implements IteratorAggregate
      */
     private array $iterables;
 
+    private Closure $accessor;
+
     /**
      * @param iterable<T> $items
      * @param iterable<T> ...$otherIterables
@@ -27,6 +30,22 @@ final class Set implements IteratorAggregate
     public function __construct(iterable $items, iterable ...$otherIterables)
     {
         $this->iterables = [$items, ...$otherIterables];
+        $this->accessor = static fn ($item) => $item;
+    }
+
+    /**
+     * @return self<T>
+     */
+    public function withAccessor(callable $accessor): self
+    {
+        if (!$accessor instanceof Closure) {
+            $accessor = Closure::fromCallable($accessor);
+        }
+
+        $clone = clone $this;
+        $clone->accessor = $accessor;
+
+        return $clone;
     }
 
     /**
@@ -50,9 +69,10 @@ final class Set implements IteratorAggregate
         $yielded = [];
         foreach ($this->iterables as $iterable) {
             foreach ($iterable as $key => $item) {
-                if (!in_array($item, $yielded, true)) {
+                $unique = ($this->accessor)($item);
+                if (!in_array($unique, $yielded, true)) {
                     yield $key => $item;
-                    $yielded[] = $item;
+                    $yielded[] = $unique;
                 }
             }
         }
